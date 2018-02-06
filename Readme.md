@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Павел Орлов](https://up.htmlacademy.ru/nodejs/1/user/166811).
-* Наставник: `Неизвестно`.
+* Наставник: [Игорь Антонов] (https://htmlacademy.ru/profile/antonov).
 
 ---
 
