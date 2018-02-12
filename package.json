@@ -1,0 +1,24 @@
+{
+  "name": "keksobooking",
+  "version": "0.0.1",
+  "description": "учебный проект",
+  "main": "index.js",
+  "scripts": {
+    "test:lint": "eslint .",
+    "test": "npm run test:lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TiesP/166811-keksobooking.git"
+  },
+  "author": "Pavel Orlov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TiesP/166811-keksobooking/issues"
+  },
+  "homepage": "https://github.com/TiesP/166811-keksobooking#readme",
+  "devDependencies": {
+    "eslint": "^4.17.0",
+    "eslint-config-htmlacademy": "^0.4.2"
+  }
+}
