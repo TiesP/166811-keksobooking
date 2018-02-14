@@ -5,6 +5,6 @@ module.exports = {
   name: `license`,
   description: `Shows program license`,
   execute() {
-    console.log(`${packageInfo.license}`);
+    console.log(`${packageInfo.license.green}`);
   }
 };

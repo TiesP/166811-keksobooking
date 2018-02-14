@@ -1,3 +1,4 @@
+const colors = require(`colors`);
 const version = require(`./src/version`);
 const help = require(`./src/help`);
 const intro = require(`./src/intro`);
@@ -28,7 +29,7 @@ switch (arg) {
     break;
   default:
     console.error(`Неизвестная команда ${arg}. 
-Чтобы прочитать правила использования приложения, наберите "--help"`);
+Чтобы прочитать правила использования приложения, наберите "--help"`.red);
     process.exitCode = 1;
 }
 

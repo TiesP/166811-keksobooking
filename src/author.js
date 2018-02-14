@@ -5,6 +5,6 @@ module.exports = {
   name: `author`,
   description: `Shows program author`,
   execute() {
-    console.log(`${packageInfo.author}`);
+    console.log(`${packageInfo.author.green}`);
   }
 };
