@@ -1,15 +1,24 @@
+const version = require(`./src/version`);
+const help = require(`./src/help`);
+const intro = require(`./src/intro`);
+const author = require(`./src/author`);
+const description = require(`./src/description`);
+const license = require(`./src/license`);
+
 const arg = process.argv.slice(2)[0];
 
 if (!arg) {
-  console.log(`Привет пользователь! 
-Эта программа будет запускать сервер «Кексобукинг». 
-Автор: Павел Орлов.`);
+  intro.execute();
 } else if (arg === `--version`) {
-  console.log(`v1.0.1`);
+  version.execute();
 } else if (arg === `--help`) {
-  console.log(`Доступные команды:
---help    — печатает этот текст;
---version — печатает версию приложения;`);
+  help.execute();
+} else if (arg === `--author`) {
+  author.execute();
+} else if (arg === `--description`) {
+  description.execute();
+} else if (arg === `--license`) {
+  license.execute();
 } else {
   console.error(`Неизвестная команда ${arg}. 
 Чтобы прочитать правила использования приложения, наберите "--help"`);
