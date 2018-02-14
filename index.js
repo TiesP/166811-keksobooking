@@ -7,9 +7,10 @@ const description = require(`./src/description`);
 const license = require(`./src/license`);
 
 const arg = process.argv.slice(2)[0];
+const command = arg ? arg : null;
 
-switch (arg) {
-  case undefined:
+switch (command) {
+  case null:
     intro.execute();
     break;
   case `--version`:
@@ -28,8 +29,8 @@ switch (arg) {
     license.execute();
     break;
   default:
-    console.error(`Неизвестная команда ${arg}. 
-Чтобы прочитать правила использования приложения, наберите "--help"`.red);
+    console.error(colors.red(`Неизвестная команда ${arg}. 
+Чтобы прочитать правила использования приложения, наберите "--help"`));
     process.exitCode = 1;
 }
 
