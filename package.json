@@ -20,7 +20,8 @@
   "homepage": "https://github.com/TiesP/166811-keksobooking#readme",
   "devDependencies": {
     "eslint": "^4.17.0",
-    "eslint-config-htmlacademy": "^0.4.2"
+    "eslint-config-htmlacademy": "^0.4.2",
+    "mocha": "5.0.1"
   },
   "dependencies": {
     "colors": "1.1.2"
