@@ -1,3 +1,4 @@
+const colors = require(`colors`);
 const version = require(`./src/version`);
 const help = require(`./src/help`);
 const intro = require(`./src/intro`);
@@ -6,22 +7,30 @@ const description = require(`./src/description`);
 const license = require(`./src/license`);
 
 const arg = process.argv.slice(2)[0];
+const command = arg ? arg : null;
 
-if (!arg) {
-  intro.execute();
-} else if (arg === `--version`) {
-  version.execute();
-} else if (arg === `--help`) {
-  help.execute();
-} else if (arg === `--author`) {
-  author.execute();
-} else if (arg === `--description`) {
-  description.execute();
-} else if (arg === `--license`) {
-  license.execute();
-} else {
-  console.error(`Неизвестная команда ${arg}. 
-Чтобы прочитать правила использования приложения, наберите "--help"`);
-  process.exitCode = 1;
+switch (command) {
+  case null:
+    intro.execute();
+    break;
+  case `--version`:
+    version.execute();
+    break;
+  case `--help`:
+    help.execute();
+    break;
+  case `--author`:
+    author.execute();
+    break;
+  case `--description`:
+    description.execute();
+    break;
+  case `--license`:
+    license.execute();
+    break;
+  default:
+    console.error(colors.red(`Неизвестная команда ${arg}. 
+Чтобы прочитать правила использования приложения, наберите "--help"`));
+    process.exitCode = 1;
 }
 
