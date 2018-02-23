@@ -1,5 +1,5 @@
 const assert = require(`assert`);
-const {generateEntity} = require(`../src/data`);
+const {generateEntity, checkFile} = require(`../src/data`);
 
 describe(`Test generateEntity()`, function () {
   const data = generateEntity();
@@ -47,6 +47,20 @@ describe(`Test generateEntity()`, function () {
       assert(data.location.x >= 300 && data.location.x <= 900);
       assert(data.location.y >= 150 && data.location.y <= 500);
       assert.equal(data.offer.address, `${data.location.x},${data.location.y}`);
+    });
+  });
+});
+
+describe(`Запись тестовых данных в файл`, function () {
+  describe(`проверка существования файла`, function () {
+    it(`функция проверки`, function () {
+      assert.equal(typeof checkFile, `function`);
+    });
+    it(`файл существует`, function () {
+      assert.equal(checkFile(__filename), true);
+    });
+    it(`файл не существует`, function () {
+      assert.equal(checkFile(__filename + __filename), false);
     });
   });
 });

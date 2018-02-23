@@ -1,3 +1,5 @@
+const fs = require(`fs`);
+
 const urlUser = `https://robohash.org/`;
 const userLogins = [`a`, `b`, `c`];
 const arrPhoto = [
@@ -63,8 +65,16 @@ const generateEntity = () => {
   };
 };
 
+const checkFile = (fileNameFull) => {
+  if (fileNameFull) {
+    return fs.existsSync(fileNameFull);
+  }
+  return false;
+};
+
 
 module.exports = {
-  generateEntity
+  generateEntity,
+  checkFile
 };
 
