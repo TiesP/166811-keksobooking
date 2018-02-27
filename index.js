@@ -5,8 +5,11 @@ const intro = require(`./src/intro`);
 const author = require(`./src/author`);
 const description = require(`./src/description`);
 const license = require(`./src/license`);
+const server = require(`./src/server`);
 
-const arg = process.argv.slice(2)[0];
+const args = process.argv.slice(2);
+const arg = args[0];
+const portUser = args[1];
 const command = arg ? arg : null;
 
 switch (command) {
@@ -27,6 +30,9 @@ switch (command) {
     break;
   case `--license`:
     license.execute();
+    break;
+  case `--server`:
+    server.execute(portUser);
     break;
   default:
     console.error(colors.red(`Неизвестная команда ${arg}. 

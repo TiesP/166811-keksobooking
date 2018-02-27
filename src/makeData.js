@@ -1,3 +1,4 @@
+const readline = require(`readline`);
 const fs = require(`fs`);
 const {generateEntity, checkFile} = require(`./data`);
 
@@ -10,62 +11,52 @@ const createDataFile = (numberOfObjects, fileName) => {
 };
 
 const makeData = () => {
-  let commandNumber = 0;
-  let numberOfObjects = 0;
-  const stdin = process.openStdin();
-  let fileName = `data.json`;
-
-  stdin.addListener(`data`, function (input) {
-    commandNumber++;
-    const inputString = input.toString().trim();
-
-    switch (commandNumber) {
-      case 1:
-        numberOfObjects = parseInt(inputString, 10);
-        if (isNaN(numberOfObjects) || (numberOfObjects === 0)) {
-          console.log(`Введено неправильное значение! Надо вводить число больше нуля.`);
-          process.exit();
-        }
-        console.log(`Будет создано ${numberOfObjects} объектов.
-Введите имя файла относительно текущей директории. 
-Если имя не введено, будет использовано "data.json" :`);
-        break;
-      case 2:
-        if (inputString) {
-          fileName = inputString;
-        }
-        if (checkFile(fileName)) {
-          console.log(`Файл ${fileName} уже существует.
-Перезаписать этот файл? (y/n)" :`);
-        } else {
-          createDataFile(numberOfObjects, fileName);
-          process.exit();
-        }
-        break;
-      case 3:
-        if (inputString === `y`) {
-          createDataFile(numberOfObjects, fileName);
-        }
-        process.exit();
-        break;
-    }
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+    prompt: `>>>`
   });
 
-  console.log(`Привет пользователь! 
-Эта программа будет запускать сервер «Кексобукинг».
-Для начала надо создать тестовые объекты. 
-Введите необходимое кол-во объектов :`);
+  let numberOfObjects = 0;
+  let fileName = `data.json`;
+
+  const checkAnswer = (answer) => {
+    if (answer === `y`) {
+      createDataFile(numberOfObjects, fileName);
+    }
+    process.exit();
+  };
+
+  const getFileName = (answer) => {
+    if (answer) {
+      fileName = answer;
+    }
+    if (checkFile(fileName)) {
+      rl.question(`Файл ${fileName} уже существует.
+Перезаписать этот файл? (y/n)" :`, checkAnswer);
+    } else {
+      createDataFile(numberOfObjects, fileName);
+      process.exit();
+    }
+  };
+
+  const getNumber = (answer) => {
+    numberOfObjects = parseInt(answer, 10);
+    console.log(answer);
+    if (isNaN(numberOfObjects) || (numberOfObjects === 0)) {
+      console.log(`Введено неправильное значение! Надо вводить число больше нуля.`);
+      process.exit();
+    }
+    rl.question(`Будет создано ${numberOfObjects} объектов.
+Введите имя файла относительно текущей директории.
+Если имя не введено, будет использовано "${fileName}" :`, getFileName);
+  };
+
+  rl.question(`Для начала надо создать тестовые объекты. 
+Введите необходимое кол-во объектов :`, getNumber);
 
 };
 
-const arg = process.argv.slice(2)[0];
-const command = arg ? arg : null;
-
-switch (command) {
-  case null:
-    makeData();
-    break;
-  default:
-    console.error(`Неизвестная команда ${arg}. `);
-    process.exitCode = 1;
-}
+module.exports = {
+  makeData
+};
