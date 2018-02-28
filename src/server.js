@@ -1,9 +1,9 @@
-const express = require('express');
+const express = require(`express`);
 
 const PORT = 3000;
 const app = express();
 
-app.use(express.static('static'));
+app.use(express.static(`static`));
 
 module.exports = {
   name: `server`,
@@ -13,6 +13,6 @@ module.exports = {
 
     app.listen(currentPort, () => {
       console.log(`Server running at http://localhost:${currentPort}/`);
-    })
+    });
   }
 };
