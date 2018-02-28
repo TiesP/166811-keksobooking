@@ -21,22 +21,17 @@ const readFileF = async (file, res) => {
   res.statusCode = 200;
   res.statusMessage = `OK`;
 
-  switch (extname) {
-    case `.html`:
-      res.setHeader(`Content-Type`, `text/html; charset=UTF-8`);
-      break;
-    case `.ico`:
-      res.setHeader(`Content-Type`, `image/x-icon`);
-      break;
-    case `.png`:
-      res.setHeader(`Content-Type`, `image/png`);
-      break;
-    case `.css`:
-      res.setHeader(`Content-Type`, `text/css`);
-      break;
-    default:
-      res.setHeader(`Content-Type`, `text/plain`);
-      break;
+  const types = {
+    '.html': `text/html; charset=UTF-8`,
+    '.ico': `image/x-icon`,
+    '.png': `image/png`,
+    '.css': `text/css`
+  };
+
+  if (types[extname]) {
+    res.setHeader(`Content-Type`, types[extname]);
+  } else {
+    res.setHeader(`Content-Type`, `text/plain`);
   }
 
   res.setHeader(`Content-Length`, Buffer.byteLength(data));
