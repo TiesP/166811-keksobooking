@@ -2,7 +2,6 @@ const request = require(`supertest`);
 const assert = require(`assert`);
 const {app} = require(`../src/server`);
 
-// describe(`api`, () => {
 describe(`GET /api/offers`, () => {
   it(`respond with json GET api/offers`, () => {
     return request(app)
@@ -61,5 +60,4 @@ describe(`POST /api/offers`, () => {
         .expect(200, offer);
   });
 });
-// });
 
