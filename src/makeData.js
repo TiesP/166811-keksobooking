@@ -5,7 +5,7 @@ const {generateEntity, checkFile} = require(`./data`);
 const createDataFile = (numberOfObjects, fileName) => {
   const listObj = [];
   for (let i = 0; i < numberOfObjects; i++) {
-    listObj.push(generateEntity());
+    listObj.push(generateEntity(i));
   }
   fs.writeFileSync(fileName, JSON.stringify(listObj));
 };
