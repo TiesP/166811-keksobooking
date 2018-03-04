@@ -39,9 +39,9 @@ const getRandomFeatures = (maxCountFeatures) => {
 const getDate = (counter) => {
   switch (counter) {
     case 0:
-      return +new Date(2017, 0, 1);// 1483218000000
+      return +new Date(2017, 0, 1);// 1483218000000 для тестов
     case 1:
-      return +new Date(2018, 0, 1);// 1514754000000
+      return +new Date(2018, 0, 1);// 1514754000000 для тестов
     default:
       return +new Date();// произвольная
   }
