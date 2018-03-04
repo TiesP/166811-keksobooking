@@ -36,8 +36,8 @@ const getRandomFeatures = (maxCountFeatures) => {
   return curFeatures;
 };
 
-const getDate = (i) => {
-  switch (i) {
+const getDate = (counter) => {
+  switch (counter) {
     case 0:
       return +new Date(2017, 0, 1);// 1483218000000
     case 1:
@@ -47,7 +47,7 @@ const getDate = (i) => {
   }
 };
 
-const generateEntity = (i) => {
+const generateEntity = (counter) => {
   const randomX = getRandomInt(300, 900);
   const randomY = getRandomInt(150, 500);
 
@@ -73,7 +73,7 @@ const generateEntity = (i) => {
       x: randomX,
       y: randomY
     },
-    "date": String(getDate(i))
+    "date": String(getDate(counter))
   };
 };
 
