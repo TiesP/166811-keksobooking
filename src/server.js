@@ -12,7 +12,7 @@ app.use(express.static(`static`));
 app.use(bodyParser.json());
 
 app.get(`/api/offers`, (req, res) => {
-  res.send(getOffers());
+  res.send(getOffers(req.query.skip, req.query.limit));
 });
 
 app.get(`/api/offers/:date`, function (req, res) {

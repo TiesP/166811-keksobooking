@@ -17,6 +17,42 @@ describe(`GET /api/offers`, () => {
         });
   });
 
+  it(`respond with json GET api/offers + skip`, () => {
+    return request(app)
+        .get(`/api/offers?skip=8`)
+        .set(`Accept`, `application/json`)
+        .expect(200)
+        .expect(`Content-Type`, /json/)
+        .then((response) => {
+          const offers = response.body;
+          assert.equal(offers.length, 2);
+        });
+  });
+
+  it(`respond with json GET api/offers + limit`, () => {
+    return request(app)
+        .get(`/api/offers?limit=5`)
+        .set(`Accept`, `application/json`)
+        .expect(200)
+        .expect(`Content-Type`, /json/)
+        .then((response) => {
+          const offers = response.body;
+          assert.equal(offers.length, 5);
+        });
+  });
+
+  it(`respond with json GET api/offers + limit, skip`, () => {
+    return request(app)
+        .get(`/api/offers?limit=1&skip=8`)
+        .set(`Accept`, `application/json`)
+        .expect(200)
+        .expect(`Content-Type`, /json/)
+        .then((response) => {
+          const offers = response.body;
+          assert.equal(offers.length, 1);
+        });
+  });
+
   it(`respond with json GET api/offers/:date`, () => {
     return request(app)
         .get(`/api/offers/1514754000000`)
