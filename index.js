@@ -5,7 +5,7 @@ const intro = require(`./src/intro`);
 const author = require(`./src/author`);
 const description = require(`./src/description`);
 const license = require(`./src/license`);
-const server = require(`./src/server`);
+const server = require(`./src/server/server`);
 
 const args = process.argv.slice(2);
 const arg = args[0];

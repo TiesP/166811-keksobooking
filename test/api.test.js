@@ -1,6 +1,15 @@
 const request = require(`supertest`);
 const assert = require(`assert`);
-const {app} = require(`../src/server`);
+const {app} = require(`../src/server/server`);
+const {
+  isExist,
+  checkType,
+  checkMin,
+  checkMax,
+  checkEnum,
+  noDuplicates,
+  isTime
+} = require(`../src/server/validator`);
 
 describe(`GET /api/offers`, () => {
   it(`respond with json GET api/offers`, () => {
@@ -76,24 +85,70 @@ describe(`GET /api/offers`, () => {
   });
 });
 
+
 describe(`POST /api/offers`, () => {
   it(`respond with json POST api/offers`, () => {
     const offer = {
-      'title': `Большая уютная квартира`,
-      'address': `300,150`,
-      'price': 1000000,
+      'title': `Большая уютная квартира с удобной мебелью`,
       'type': `flat`,
-      'rooms': 3,
-      'guests': 5,
-      'checkin': `12:00`,
-      'checkout': `13:00`,
-      'features': [`wifi`, `washer`],
-      'description': `Маленькая чистая квратира на краю парка. Без интернета, регистрации и СМС.`
+      'price': 100000,
+      'address': `300,150`,
+      'timein': `12:00`,
+      'timeout': `13:00`,
+      'rooms': 3
     };
     return request(app)
         .post(`/api/offers`)
         .send(offer)
         .expect(200, offer);
   });
+
 });
 
+describe(`validate`, () => {
+
+  it(`is exist`, () => {
+    assert(isExist(`name`, {'name': ``}, true), `is exist`);
+    assert(!isExist(`name`, {'price': ``}, true), `is not exist`);
+    assert(isExist(`name`, {'price': ``}, false), `is not required`);
+  });
+
+  it(`check type`, () => {
+    assert(checkType(``, `string`), `is string`);
+    assert(!checkType(1, `string`), `is not string`);
+    assert(checkType(1, `number`), `is number`);
+    assert(!checkType(`a`, `number`), `is not number`);
+    assert(checkType([], `array`), `is array`);
+    assert(!checkType(1, `array`), `1 is not array`);
+    assert(!checkType(`a`, `array`), `string is not array`);
+  });
+
+  it(`check min/max`, () => {
+    assert(checkMin(2, 2, `number`), `value >= min`);
+    assert(!checkMin(1, 2, `number`), `value < min`);
+    assert(checkMax(2, 2, `number`), `value <= max`);
+    assert(!checkMax(3, 2, `number`), `value > max`);
+    assert(checkMin(`aa`, 2, `string`), `value length >= min`);
+    assert(!checkMin(`a`, 2, `string`), `value length < min`);
+    assert(checkMax(`aa`, 2, `string`), `value length <= max`);
+    assert(!checkMax(`aaa`, 2, `string`), `value length > max`);
+  });
+
+  it(`check enum`, () => {
+    assert(checkEnum(`one`, [`one`, `two`, `three`]), `one of the possible values`);
+    assert(!checkEnum(`five`, [`one`, `two`, `three`]), `not one of the possible values`);
+  });
+
+  it(`no duplicates`, () => {
+    assert(noDuplicates([`one`, `two`, `three`], true), `no duplicates`);
+    assert(!noDuplicates([`one`, `two`, `one`], true), `there are duplicates`);
+  });
+
+  it(`is time HH:mm`, () => {
+    assert(isTime(`22:33`), `is time`);
+    assert(!isTime(`33:22`), `is not time`);
+    assert(checkType(`00:00`, `time`), `is time`);
+    assert(!checkType(`44:55`, `time`), `is not time`);
+  });
+
+});
