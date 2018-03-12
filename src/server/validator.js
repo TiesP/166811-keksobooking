@@ -2,18 +2,26 @@ const types = [`flat`, `house`, `bungalo`, `palace`];
 const features = [`dishwasher`, `elevator`, `conditioner`, `parking`, `washer`, `wifi`];
 
 const schema = [
+  {'name': `name`, 'type': `string`},
   {'name': `title`, 'required': true, 'type': `string`, 'min': 30, 'max': 140},
-  {'name': `type`, 'required': true, 'type': `string`, 'enum': types},
-  {'name': `price`, 'required': true, 'type': `number`, 'min': 1, 'max': 100000},
+  {'name': `description`, 'type': `string`},
   {'name': `address`, 'required': true, 'type': `string`, 'max': 100},
-  {'name': `timein`, 'required': true, 'type': `time`},
-  {'name': `timeout`, 'required': true, 'type': `time`},
+  {'name': `price`, 'required': true, 'type': `number`, 'min': 1, 'max': 100000},
+  {'name': `type`, 'required': true, 'type': `string`, 'enum': types},
   {'name': `rooms`, 'required': true, 'type': `number`, 'min': 0, 'max': 1000},
+  {'name': `guests`, 'type': `number`},
+  {'name': `checkin`, 'required': true, 'type': `time`},
+  {'name': `checkout`, 'required': true, 'type': `time`},
   {'name': `features`, 'type': `array`, 'enum': features, 'noDuplicates': true},
-  {'name': `avatar`, 'type': `string`},
-  {'name': `preview`, 'type': `string`},
-  {'name': `name`, 'type': `string`}
+  {'name': `preview`, 'type': `string`}
 ];
+
+const TIME = {
+  'MIN_HOURS': 0,
+  'MAX_HOURS': 23,
+  'MIN_MINUTES': 0,
+  'MAX_MINUTES': 59
+};
 
 const checkField = (field, data, errors) => {
   if (!isExist(field.name, data, field.required)) {
@@ -77,6 +85,9 @@ const checkType = (fieldValue, type) => {
       return Array.isArray(fieldValue);
     case `time`:
       return isTime(fieldValue);
+    case `number`:
+      const fieldValueNumber = parseInt(fieldValue, 10);
+      return (typeof fieldValueNumber === type && String(fieldValueNumber) === String(fieldValue));
     default:
       return (typeof fieldValue === type);
   }
@@ -136,16 +147,16 @@ const isTime = (fieldValue) => {
   }
   const hours = parseInt(fieldValue.substring(0, 2), 10);
   const minuts = parseInt(fieldValue.substring(3, 5), 10);
-  if (!checkMin(hours, 0)) {
+  if (!checkMin(hours, TIME.MIN_HOURS)) {
     return false;
   }
-  if (!checkMax(hours, 23)) {
+  if (!checkMax(hours, TIME.MAX_HOURS)) {
     return false;
   }
-  if (!checkMin(minuts, 0)) {
+  if (!checkMin(minuts, TIME.MIN_MINUTES)) {
     return false;
   }
-  if (!checkMax(minuts, 59)) {
+  if (!checkMax(minuts, TIME.MAX_MINUTES)) {
     return false;
   }
   return true;

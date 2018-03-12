@@ -1,4 +1,3 @@
-const {makeData} = require(`./makeData`);
 
 module.exports = {
   name: `intro`,
@@ -7,6 +6,5 @@ module.exports = {
     console.log(`Привет пользователь! 
 Эта программа будет запускать сервер «Кексобукинг». 
 Автор: Павел Орлов.`.green);
-    makeData();
   }
 };

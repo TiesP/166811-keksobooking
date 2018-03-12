@@ -1,20 +1,15 @@
-const fs = require(`fs`);
-
 const urlUser = `https://robohash.org/`;
 const userLogins = [`a`, `b`, `c`];
+const names = [`Keks`, `Pavel`, `Nikolay`, `Alex`, `Ulyana`, `Anastasyia`, `Julia`];
 const arrPhoto = [
   `http://o0.github.io/assets/images/tokyo/hotel1.jpg`,
   `http://o0.github.io/assets/images/tokyo/hotel2.jpg`,
   `http://o0.github.io/assets/images/tokyo/hotel3.jpg`
 ];
 const titles = [
-  `Большая уютная квартира`,
-  `Маленькая неуютная квартира`,
-  `Огромный прекрасный дворец`,
-  `Маленький ужасный дворец`,
-  `Красивый гостевой домик`,
+  `Маленькая-маленькая неуютная квартира`,
   `Некрасивый негостеприимный домик`,
-  `Уютное бунгало далеко от моря`,
+  `Уютное бунгало недалеко от моря`,
   `Неуютное бунгало по колено в воде`
 ];
 const types = [`flat`, `palace`, `house`, `bungalo`];
@@ -24,6 +19,8 @@ const features = [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `condit
 const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 const getRandomUser = () => urlUser + userLogins[getRandomInt(0, 2)];
+
+const getRandomName = () => names[getRandomInt(0, 6)];
 
 const getRandomFeatures = (maxCountFeatures) => {
   const curFeatures = [];
@@ -54,19 +51,20 @@ const generateEntity = (counter) => {
   return {
     "author":
       {
+        "name": getRandomName(),
         "avatar": `${getRandomUser()}`
       },
     "offer": {
-      "title": titles[getRandomInt(0, 7)],
+      "title": titles[getRandomInt(0, 3)],
+      "description": ``,
       "address": `${randomX},${randomY}`,
-      "price": getRandomInt(1000, 1000000),
+      "price": getRandomInt(1, 100000),
       "type": types[getRandomInt(0, 3)],
-      "rooms": getRandomInt(1, 5),
+      "rooms": getRandomInt(0, 1000),
       "guests": getRandomInt(1, 5),
       "checkin": hours[getRandomInt(0, 2)],
       "checkout": hours[getRandomInt(0, 2)],
       "features": getRandomFeatures(getRandomInt(0, 6)),
-      "description": ``,
       "photos": arrPhoto
     },
     "location": {
@@ -77,16 +75,11 @@ const generateEntity = (counter) => {
   };
 };
 
-const checkFile = (fileNameFull) => {
-  if (fileNameFull) {
-    return fs.existsSync(fileNameFull);
-  }
-  return false;
-};
-
 
 module.exports = {
   generateEntity,
-  checkFile
+  titles,
+  types,
+  hours
 };
 
