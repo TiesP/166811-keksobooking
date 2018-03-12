@@ -15,8 +15,9 @@ const writeOffers = async (offers) => {
   const db = client.db(params.dbName);
   const collection = db.collection(params.collectionName);
   await collection.deleteMany({});
-  await collection.insertMany(offers);
+  const result = await collection.insertMany(offers);
   client.close();
+  return result;
 };
 
 const writeOffer = async (offer) => {
