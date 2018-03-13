@@ -1,13 +1,8 @@
 const assert = require(`assert`);
-const {generateEntity, checkFile} = require(`../src/data`);
+const {generateEntity, titles, types, hours} = require(`../src/data`);
 
 describe(`Test generateEntity()`, function () {
   const data = generateEntity();
-  const titles = [`Большая уютная квартира`, `Маленькая неуютная квартира`, `Огромный прекрасный дворец`,
-    `Маленький ужасный дворец`, `Красивый гостевой домик`, `Некрасивый негостеприимный домик`,
-    `Уютное бунгало далеко от моря`, `Неуютное бунгало по колено в воде`];
-  const types = [`flat`, `palace`, `house`, `bungalo`];
-  const hours = [`12:00`, `13:00`, `14:00`];
 
   describe(`функция создана generateEntity()`, function () {
     it(`should have a generateEntity Method`, function () {
@@ -15,52 +10,40 @@ describe(`Test generateEntity()`, function () {
     });
   });
 
-  describe(`проверка структуры объекта и типов полей`, function () {
+  describe(`проверка полной структуры объекта и типов полей`, function () {
     it(`data is obj & should have some keys`, function () {
       assert.equal(typeof data, `object`);
-      assert.equal(typeof data.author.avatar, `string`);
-      assert.equal(typeof data.offer.title, `string`);
-      assert.equal(typeof data.offer.address, `string`);
+      assert.equal(typeof data.author.name, `string`, `author.name`);
+      assert.equal(typeof data.author.avatar, `string`, `author.avatar`);
+      assert.equal(typeof data.offer.title, `string`, `title`);
+      assert.equal(typeof data.offer.description, `string`, `description`);
+      assert.equal(typeof data.offer.address, `string`, ``);
       assert.equal(typeof data.offer.price, `number`, `price`);
       assert.equal(typeof data.offer.type, `string`, `type`);
       assert.equal(typeof data.offer.rooms, `number`, `rooms`);
       assert.equal(typeof data.offer.guests, `number`, `guests`);
       assert.equal(typeof data.offer.checkin, `string`, `checkin`);
-      assert.equal(typeof data.offer.checkout, `string`, `checkout`);
+      assert.equal(typeof data.offer.checkout, `string`, `checkout `);
       assert(Array.isArray(data.offer.features), `features`);
-      assert.equal(typeof data.offer.description, `string`, `description`);
       assert(Array.isArray(data.offer.photos), `photos`);
       assert.equal(typeof data.location.x, `number`, `location.x`);
       assert.equal(typeof data.location.y, `number`, `location.y`);
+      assert.equal(typeof data.date, `string`, `date`);
     });
   });
 
   describe(`проверка данных`, function () {
     it(`данные в указанных пределах`, function () {
-      assert(titles.indexOf(data.offer.title) >= 0);
-      assert(data.offer.price >= 1000 && data.offer.price <= 1000000);
-      assert(data.offer.rooms >= 1 && data.offer.rooms <= 5);
-      assert(types.indexOf(data.offer.type) >= 0);
-      assert(hours.indexOf(data.offer.checkin) >= 0);
-      assert(hours.indexOf(data.offer.checkout) >= 0);
-      assert.equal(data.offer.description, ``, `description`);
-      assert(data.location.x >= 300 && data.location.x <= 900);
-      assert(data.location.y >= 150 && data.location.y <= 500);
-      assert.equal(data.offer.address, `${data.location.x},${data.location.y}`);
+      assert(titles.indexOf(data.offer.title) >= 0, `title из списка`);
+      assert(data.offer.title.length >= 30 && data.offer.title.length <= 140, `title длина`);
+      assert(data.offer.price >= 1 && data.offer.price <= 100000, `price пределы`);
+      assert(data.offer.rooms >= 0 && data.offer.rooms <= 1000, `rooms пределы`);
+      assert(types.indexOf(data.offer.type) >= 0, `type из списка`);
+      assert(hours.indexOf(data.offer.checkin) >= 0, `checkin из списка`);
+      assert(hours.indexOf(data.offer.checkout) >= 0, `checkout из списка`);
+      assert(data.location.x >= 300 && data.location.x <= 900, `location.x пределы`);
+      assert(data.location.y >= 150 && data.location.y <= 500, `location.y пределы`);
     });
   });
 });
 
-describe(`Запись тестовых данных в файл`, function () {
-  describe(`проверка существования файла`, function () {
-    it(`функция проверки`, function () {
-      assert.equal(typeof checkFile, `function`);
-    });
-    it(`файл существует`, function () {
-      assert.equal(checkFile(__filename), true);
-    });
-    it(`файл не существует`, function () {
-      assert.equal(checkFile(__filename + __filename), false);
-    });
-  });
-});
