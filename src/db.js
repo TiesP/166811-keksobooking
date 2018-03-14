@@ -1,5 +1,6 @@
 const {MongoClient, ObjectID, GridFSBucket} = require(`mongodb`);
 
+const CHUNK_SIZE = 1024;
 
 const getParamsDB = () => {
   const params = {};
@@ -33,7 +34,7 @@ const writeOffer = async (offer) => {
 
 const getBucket = async (db) => {
   return new GridFSBucket(db, {
-    chunkSizeBytes: 1024,
+    chunkSizeBytes: CHUNK_SIZE,
     bucketName: `avatars`
   });
 };
