@@ -7,7 +7,7 @@ const NotFoundError = require(`./not-found-error`);
 const {validateSchema} = require(`./validator`);
 const createStreamFromBuffer = require(`../util/buffer-to-stream`);
 const async = require(`../util/async`);
-const logger = require(`../winston`)
+const logger = require(`../winston`);
 
 const PORT = process.env.SERVER_PORT;
 const app = express();

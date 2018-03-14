@@ -5,7 +5,7 @@ const intro = require(`./src/intro`);
 const author = require(`./src/author`);
 const server = require(`./src/server/server`);
 const {makeData} = require(`./src/makeData`);
-require('dotenv').config();
+require(`dotenv`).config();
 
 const args = process.argv.slice(2);
 const arg = args[0];
