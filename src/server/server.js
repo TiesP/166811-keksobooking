@@ -7,13 +7,20 @@ const NotFoundError = require(`./not-found-error`);
 const {validateSchema} = require(`./validator`);
 const createStreamFromBuffer = require(`../util/buffer-to-stream`);
 const async = require(`../util/async`);
+const logger = require(`../winston`);
 
-const PORT = 3000;
+const PORT = process.env.SERVER_PORT;
 const app = express();
 const upload = multer({storage: multer.memoryStorage()});
 
 app.use(express.static(`static`));
 app.use(bodyParser.json());
+
+app.use((req, res, next) => {
+  res.header(`Access-Control-Allow-Origin`, `*`);
+  res.header(`Access-Control-Allow-Headers`, `Origin, X-Requested-With, Content-Type, Accept`);
+  next();
+});
 
 app.get(`/api/offers`, async(async (req, res) => {
   const skipInt = parseInt(req.query.skip, 10);
@@ -98,7 +105,7 @@ module.exports = {
     const currentPort = portUser ? portUser : PORT;
 
     app.listen(currentPort, () => {
-      console.log(`Server running at http://localhost:${currentPort}/`);
+      logger.info(`Server running at http://${process.env.SERVER_HOST}:${currentPort}/`);
     });
   },
   app

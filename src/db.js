@@ -1,10 +1,11 @@
 const {MongoClient, ObjectID, GridFSBucket} = require(`mongodb`);
 
+const CHUNK_SIZE = 1024;
 
 const getParamsDB = () => {
   const params = {};
-  params.url = `mongodb://localhost:27017`;
-  params.dbName = (process.env.DB_MODE === `test`) ? `test-keksobooking` : `keksobooking`;
+  params.url = `mongodb://${process.env.DB_URL}`;
+  params.dbName = (process.env.DB_MODE === `test`) ? process.env.DB_TEST_NANE : process.env.DB_NANE;
   params.collectionName = `offers`;
   return params;
 };
@@ -33,7 +34,7 @@ const writeOffer = async (offer) => {
 
 const getBucket = async (db) => {
   return new GridFSBucket(db, {
-    chunkSizeBytes: 1024,
+    chunkSizeBytes: CHUNK_SIZE,
     bucketName: `avatars`
   });
 };
