@@ -16,6 +16,12 @@ const upload = multer({storage: multer.memoryStorage()});
 app.use(express.static(`static`));
 app.use(bodyParser.json());
 
+app.use((req, res, next) => {
+  res.header(`Access-Control-Allow-Origin`, `*`);
+  res.header(`Access-Control-Allow-Headers`, `Origin, X-Requested-With, Content-Type, Accept`);
+  next();
+});
+
 app.get(`/api/offers`, async(async (req, res) => {
   const skipInt = parseInt(req.query.skip, 10);
   const limitInt = parseInt(req.query.limit, 10);
