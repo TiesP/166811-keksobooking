@@ -8,7 +8,7 @@ const {validateSchema} = require(`./validator`);
 const createStreamFromBuffer = require(`../util/buffer-to-stream`);
 const async = require(`../util/async`);
 
-const PORT = 3000;
+const PORT = process.env.SERVER_PORT;
 const app = express();
 const upload = multer({storage: multer.memoryStorage()});
 
@@ -98,7 +98,7 @@ module.exports = {
     const currentPort = portUser ? portUser : PORT;
 
     app.listen(currentPort, () => {
-      console.log(`Server running at http://localhost:${currentPort}/`);
+      console.log(`Server running at http://${process.env.SERVER_HOST}:${currentPort}/`);
     });
   },
   app

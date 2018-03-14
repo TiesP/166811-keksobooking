@@ -3,8 +3,8 @@ const {MongoClient, ObjectID, GridFSBucket} = require(`mongodb`);
 
 const getParamsDB = () => {
   const params = {};
-  params.url = `mongodb://localhost:27017`;
-  params.dbName = (process.env.DB_MODE === `test`) ? `test-keksobooking` : `keksobooking`;
+  params.url = `mongodb://${process.env.DB_URL}`;
+  params.dbName = (process.env.DB_MODE === `test`) ? process.env.DB_TEST_NANE : process.env.DB_NANE;
   params.collectionName = `offers`;
   return params;
 };
